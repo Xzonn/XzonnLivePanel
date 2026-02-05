@@ -1,0 +1,209 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
+  font-size: 60px;
+  font-family: MiSans;
+}
+
+main {
+  width: 3840px;
+  height: 2160px;
+  position: relative;
+
+  scale: calc(100vw / 3840px);
+  transform-origin: top left;
+
+  background-color: #e7e7e7;
+  background-image: url("./background.png");
+  background-position: center center;
+}
+
+main::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("./20260205.png");
+  background-position: top right;
+  background-repeat: no-repeat;
+}
+
+main > div {
+  position: absolute;
+}
+
+#video-main {
+  width: 2880px;
+  height: 1620px;
+
+  left: 0;
+  top: 540px;
+
+  background-color: #0000ff20;
+}
+
+#video-sub {
+  width: 960px;
+  height: 540px;
+
+  right: 0;
+  bottom: 0;
+
+  background-color: #ff000020;
+}
+
+#danmaku {
+  width: 960px;
+  height: 1080px;
+
+  right: 0;
+  top: 540px;
+
+  background-color: #00ff0020;
+}
+
+#logo {
+  right: 30px;
+  top: 30px;
+}
+
+#logo,
+.logo-svg {
+  width: 256px;
+  height: 80px;
+}
+
+.logo-svg {
+  filter: drop-shadow(0 0 8px #007fff);
+  --color-fill: #fff;
+}
+
+#time-front,
+#time-back {
+  right: 30px;
+  top: 120px;
+
+  width: 256px;
+  height: 80px;
+
+  font-size: 80px;
+  line-height: 80px;
+  font-family: Clock, monospace;
+  text-align: center;
+}
+
+.front {
+  z-index: 201;
+  color: #000;
+}
+
+.back {
+  z-index: 200;
+  color: #fff !important;
+  -webkit-text-stroke: 8px #fff;
+}
+
+#subtitle-back,
+#subtitle-front {
+  width: 2880px;
+  height: 540px;
+
+  top: 0;
+  left: 0;
+
+  overflow: hidden;
+  display: grid;
+
+  grid-template-columns: 240px auto;
+  grid-template-rows: repeat(auto, 1fr);
+  gap: 15px;
+  padding: 15px;
+}
+
+.original-title,
+.original-block {
+  color: #888;
+}
+
+.comment-title,
+.comment-block {
+  color: #339;
+}
+
+.subtitle-block {
+  line-height: 80px;
+  overflow: hidden;
+  position: relative;
+}
+
+.subtitle-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.subtitle-title-sub {
+  font-size: 40px;
+}
+
+.subtitle-text {
+  position: absolute;
+  bottom: 0;
+}
+
+@font-face {
+  font-family: Clock;
+  src: url("./Sono-ExtraBold.ttf") format("truetype");
+}
+
+#timeline {
+  right: 30px;
+  top: 200px;
+
+  overflow: hidden;
+  padding: 16px 0;
+  width: 256px;
+  height: 64px;
+}
+
+#timeline-bar,
+#timeline-progress {
+  width: 256px;
+  height: 32px;
+  clip-path: path(
+    "M255.2261,13.57239h-.00342l-8.72559-11.9209c-.7605-1.03735-1.96948-1.65064-3.25586-1.65149H1.18808C.35642,0-.30862.97473.17795,1.64648l8.41748,11.51001c.61279.8418,1.07922,1.75085,1.07922,2.78955,0,1.03882-.52368,2.03882-1.13135,2.87378L.16953,30.33326c-.48816.67346.15149,1.66675.98315,1.66675h242.07684c1.29041-.0011,2.50281-.61853,3.26257-1.66162l8.73401-12.01013c1.03186-1.41736,1.03186-3.3385,0-4.75586Z"
+  );
+}
+
+#timeline-bar {
+  position: relative;
+  overflow: hidden;
+  background-color: #ccc;
+}
+
+#timeline-progress {
+  background-color: #e60012;
+  position: absolute;
+  top: 0;
+  left: -256px;
+}
+
+#mario-sprite {
+  width: 64px;
+  height: 64px;
+  image-rendering: pixelated;
+  overflow: hidden;
+  position: absolute;
+  background-image: url("./mario.gif");
+  background-size: contain;
+  left: -64px;
+  top: 0;
+}

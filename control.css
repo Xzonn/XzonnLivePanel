@@ -1,0 +1,23 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 14px;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 100px auto;
+  grid-template-rows: 1fr auto;
+  height: 100vh;
+  gap: 8px;
+  padding: 8px;
+}
+
+#save-button {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
