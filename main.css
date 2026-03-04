@@ -21,6 +21,7 @@ main {
 
   background-color: #e7e7e7;
   background-image: url("./background.png");
+  background-size: contain;
   background-position: center center;
 }
 
