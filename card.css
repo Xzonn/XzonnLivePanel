@@ -1,0 +1,40 @@
+.pm30th-scene {
+  width: 640px;
+  height: 640px;
+  perspective: 1280px;
+  position: absolute;
+  right: 160px;
+  top: -50px;
+}
+
+.pm30th-card.active {
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pm30th-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  border-radius: 12px;
+}
+
+.pm30th-card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+}
+
+.pm30th-card-face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pm30th-card-back {
+  transform: rotateY(180deg);
+}

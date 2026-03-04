@@ -35,10 +35,12 @@ class SubtitleClient {
 
     this.reconnectAttempts = 0;
     this.reconnectTimer = null;
+    this.ws = null;
   }
 
   start() {
     const ws = new WebSocket(this.url);
+    this.ws = ws;
 
     ws.onopen = () => {
       console.log("已连接到服务器");
@@ -65,6 +67,15 @@ class SubtitleClient {
     ws.onerror = (error) => {
       console.error("WebSocket错误:", error);
     };
+  }
+
+  end() {
+    if (this.reconnectTimer) {
+      clearTimeout(this.reconnectTimer);
+    }
+    if (this.ws) {
+      this.ws.close();
+    }
   }
 }
 
@@ -129,7 +140,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const timelineInterval = setInterval(changeTimelineBar, 15);
 
   window.addEventListener("beforeunload", () => {
-    if (translatedClient.reconnectTimer) clearTimeout(translatedClient.reconnectTimer);
-    if (commentClient.reconnectTimer) clearTimeout(commentClient.reconnectTimer);
+    translatedClient.end();
+    commentClient.end();
   });
 });
