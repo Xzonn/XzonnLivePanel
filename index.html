@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebSocket 转发服务器</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+
+      .output-container {
+        display: flex;
+        gap: 20px;
+        text-align: center;
+        flex-direction: column;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="output-container">
+      <div class="original" lang="ja"></div>
+      <div class="translated" lang="zh-cn"></div>
+    </div>
+    <script>
+      const clientId = new URLSearchParams(location.search).get("id") || "default";
+      const outputUrl = `wss://${window.location.host}/ws/output/${clientId}`;
+      const outputSocket = new WebSocket(outputUrl);
+      const originalDiv = document.querySelector(".original");
+      const translatedDiv = document.querySelector(".translated");
+      outputSocket.onmessage = (event) => {
+        const data = JSON.parse(event.data || "{}");
+        const { original, translated } = data;
+        originalDiv.textContent = original;
+        originalDiv.style.display = translated ? "block" : "none";
+        translatedDiv.textContent = translated || original;
+      };
+    </script>
+  </body>
+</html>
