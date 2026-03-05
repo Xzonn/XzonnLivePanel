@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modern Music Player</title>
+    <link rel="stylesheet" href="music.css" />
+  </head>
+  <body>
+    <div class="player-container">
+      <div class="back"></div>
+      <div class="front">
+        <div class="cover-wrapper">
+          <img
+            class="cover-image"
+            src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+            alt="Song Cover" />
+        </div>
+
+        <div class="main-content">
+          <div class="song-info">
+            <h1 class="title fade-animation">&nbsp;</h1>
+            <h2 class="artist fade-animation">&nbsp;</h2>
+          </div>
+
+          <div class="progress-wrapper">
+            <span class="time time-current">00:00</span>
+            <div class="progress-bar-bg">
+              <div id="progress-fill" class="progress-bar-fill"></div>
+            </div>
+            <span class="time time-total">00:00</span>
+          </div>
+        </div>
+
+        <div class="lyrics-wrapper">
+          <div class="lyric-line fade-animation lyric-original">&nbsp;</div>
+          <div class="lyric-line fade-animation lyric-translated" lang="zh-cn">&nbsp;</div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="music.js"></script>
+  </body>
+</html>

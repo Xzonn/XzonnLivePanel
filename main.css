@@ -21,7 +21,6 @@ main {
 
   background-color: #e7e7e7;
   background-image: url("./background.png");
-  background-size: contain;
   background-position: center center;
 }
 
@@ -210,7 +209,7 @@ main > div {
 }
 
 /* 宝可梦发表会 */
-main {
+/* main {
   background-position: top left;
 }
 .original-title,
@@ -230,4 +229,23 @@ main {
 }
 #mario-sprite {
   background-image: url("./pikachu-running.png");
+} */
+
+/* 歌词 */
+#music-player {
+  display: none;
+}
+
+.lyric #subtitle-back,
+.lyric #subtitle-front {
+  display: none;
+}
+.lyric #music-player {
+  display: block;
+  position: absolute;
+  width: 2880px;
+  height: 540px;
+
+  top: 0;
+  left: 0;
 }

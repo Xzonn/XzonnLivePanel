@@ -1,8 +1,19 @@
 window.addEventListener("DOMContentLoaded", () => {
+  const isLyricRadios = document.getElementsByName("is-lyric");
   const replaceDictTextArea = document.getElementById("replace-dict");
+  const songUrlInput = document.getElementById("song-url");
   const saveButton = document.getElementById("save-button");
 
-  const storedDict = JSON.parse(localStorage.getItem("xz-replace-dict") || "{}");
+  const storedConfiguration = JSON.parse(localStorage.getItem("xz-configuration") || "{}");
+
+  const storedIsLyric = storedConfiguration["isLyric"];
+  for (const radio of isLyricRadios) {
+    if (radio.value === `${Boolean(storedIsLyric)}`) {
+      radio.checked = true;
+      break;
+    }
+  }
+  const storedDict = storedConfiguration["replaceDict"] || JSON.parse(localStorage.getItem("xz-replace-dict") || "{}");
   let dictText = [];
   for (const [key, value] of Object.entries(storedDict)) {
     dictText.push(`${key} => ${value}`);
@@ -12,15 +23,33 @@ window.addEventListener("DOMContentLoaded", () => {
   saveButton.addEventListener("click", (e) => {
     e.preventDefault();
 
+    const isLyric = document.querySelector('input[name="is-lyric"]:checked')?.value === "true";
     const dictText = replaceDictTextArea.value;
-    const dict = {};
+    const replaceDict = {};
     dictText.split("\n").forEach((line) => {
       const [key, value] = line.split("=>").map((part) => part.trim());
       if (key && value) {
-        dict[key] = value;
+        replaceDict[key] = value;
       }
     });
 
-    localStorage.setItem("xz-replace-dict", JSON.stringify(dict));
+    const newConfiguration = JSON.stringify({
+      ...storedConfiguration,
+      replaceDict,
+      isLyric,
+    });
+    if (newConfiguration !== localStorage.getItem("xz-configuration")) {
+      localStorage.setItem("xz-configuration", newConfiguration);
+    }
+
+    const songUrl = songUrlInput.value.trim();
+    if (songUrl) {
+      const websocket = new WebSocket("wss://www.www.localhost:32810/ws/output/lyric_163");
+      websocket.onopen = () => {
+        websocket.send(JSON.stringify({ url: songUrl }));
+        websocket.close();
+      };
+      songUrlInput.value = "";
+    }
   });
 });

@@ -1,0 +1,212 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --accent: #000;
+  --accent2: #888;
+}
+
+/* 基础重置与容器设置 */
+body,
+html {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: "Source Han Sans", sans-serif;
+}
+
+/* 16:3 (2880x540px) 严格限制容器 */
+.player-container {
+  width: 2880px;
+  height: 540px;
+  position: relative;
+}
+
+.back,
+.front {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2880px;
+  height: 540px;
+  color: #000;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 120px;
+  gap: 100px;
+  overflow: hidden;
+}
+
+.back {
+  z-index: 200;
+  color: #fff !important;
+  -webkit-text-stroke: 8px #fff;
+}
+.front {
+  z-index: 201;
+}
+
+/* 1. 封面区域 */
+.cover-wrapper {
+  flex-shrink: 0;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 30px #00000099;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #282828;
+  position: relative;
+  animation: spin 15s linear infinite;
+  animation-play-state: paused; /* 默认暂停 */
+}
+
+.cover-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.playing {
+  animation-play-state: running;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.back .cover-image {
+  display: none;
+}
+
+/* 中部信息与控制区域 (歌曲名、艺术家、控制、进度条) */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+}
+
+.song-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.title {
+  font-size: 64px;
+  font-weight: 700;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 2px;
+}
+
+.artist {
+  font-size: 36px;
+  font-weight: 400;
+  color: #666;
+  margin: 0;
+}
+
+/* 进度条区域 */
+.progress-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  width: 100%;
+}
+
+.time {
+  font-size: 28px;
+  color: #666;
+  font-variant-numeric: tabular-nums;
+  width: 90px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.progress-bar-bg {
+  flex: 1;
+  height: 16px;
+  background-color: #ccc;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  border: 4px solid #fff;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #444;
+  width: 0%;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  transition: width 1s linear;
+}
+
+/* 右侧歌词区域 */
+.lyrics-wrapper {
+  flex-shrink: 0;
+  width: 1080px; /* 给予歌词充足的空间 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  padding-left: 80px;
+  height: 300px;
+  position: relative;
+}
+
+.lyrics-wrapper::before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 80%;
+  background-color: #333;
+  border: 4px solid #fff;
+}
+
+.lyric-line {
+  line-height: 1.4;
+}
+
+.lyric-original {
+  font-size: 48px;
+  min-height: 60px; /* 即使没有歌词也保留高度防止跳动 */
+  font-weight: 600;
+  color: #000;
+  word-break: break-word;
+}
+
+.lyric-translated {
+  font-size: 36px;
+  font-weight: 400;
+  color: #666;
+  word-break: break-word;
+  min-height: 50px; /* 即使没有翻译也保留高度防止跳动 */
+}
+
+.fade-animation {
+  transition:
+    opacity 0.3s ease-out,
+    transform 0.3s ease-out;
+}
+.fade-animation.fade {
+  opacity: 0;
+  transform: translateY(20px);
+}

@@ -11,7 +11,7 @@ html {
 main {
   display: grid;
   grid-template-columns: 100px auto;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: 2rem auto 2rem 2rem;
   height: 100vh;
   gap: 8px;
   padding: 8px;

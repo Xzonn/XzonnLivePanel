@@ -8,8 +8,17 @@
   </head>
   <body>
     <main id="main">
+      <label for="is-lyric">歌词状态</label>
+      <div>
+        <input type="radio" id="is-lyric-true" name="is-lyric" value="true" checked />
+        <label for="is-lyric-true">开</label>
+        <input type="radio" id="is-lyric-false" name="is-lyric" value="false" />
+        <label for="is-lyric-false">关</label>
+      </div>
       <label for="replace-dict">替换词典</label>
       <textarea id="replace-dict" rows="10" cols="50"></textarea>
+      <label for="song-url">歌曲链接</label>
+      <input type="text" id="song-url" placeholder="请输入歌曲链接" />
       <button id="save-button">保存</button>
     </main>
     <script src="control.js"></script>
