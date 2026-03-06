@@ -38,7 +38,7 @@ html {
   align-items: center;
   box-sizing: border-box;
   padding: 0 120px;
-  gap: 100px;
+  gap: 60px;
   overflow: hidden;
 }
 
@@ -91,11 +91,12 @@ html {
 
 /* 中部信息与控制区域 (歌曲名、艺术家、控制、进度条) */
 .main-content {
-  flex: 1;
+  flex-grow: 0;
+  width: 1080px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 40px;
+  gap: 30px;
 }
 
 .song-info {
@@ -108,9 +109,6 @@ html {
   font-size: 64px;
   font-weight: 700;
   margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   letter-spacing: 2px;
 }
 
@@ -119,13 +117,16 @@ html {
   font-weight: 400;
   color: #666;
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* 进度条区域 */
 .progress-wrapper {
   display: flex;
   align-items: center;
-  gap: 25px;
+  gap: 30px;
   width: 100%;
 }
 
@@ -163,8 +164,8 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 20px;
-  padding-left: 80px;
+  gap: 30px;
+  padding-left: 60px;
   height: 300px;
   position: relative;
 }
@@ -182,12 +183,11 @@ html {
 }
 
 .lyric-line {
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 .lyric-original {
   font-size: 48px;
-  min-height: 60px; /* 即使没有歌词也保留高度防止跳动 */
   font-weight: 600;
   color: #000;
   word-break: break-word;
@@ -198,7 +198,10 @@ html {
   font-weight: 400;
   color: #666;
   word-break: break-word;
-  min-height: 50px; /* 即使没有翻译也保留高度防止跳动 */
+}
+
+.lyric-translated.empty {
+  margin-top: -84px;
 }
 
 .fade-animation {

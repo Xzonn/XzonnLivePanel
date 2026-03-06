@@ -39,7 +39,13 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       timeout = setTimeout(() => {
         elements.forEach((el) => {
-          el.textContent = newValue || "\u00a0";
+          if (!newValue) {
+            el.textContent = "\u00a0"; // 不可见的空格，保持元素高度
+            el.classList.add("empty");
+          } else {
+            el.textContent = newValue;
+            el.classList.remove("empty");
+          }
           el.classList.remove("fade");
         });
         timeout = null;
@@ -83,6 +89,11 @@ document.addEventListener("DOMContentLoaded", () => {
       el.textContent = newValue;
     });
   });
+  const updateLanguage = createSimpleUpdater("language", (elements, newValue) => {
+    elements.forEach((el) => {
+      el.lang = newValue;
+    });
+  });
 
   // 更新界面逻辑
   function updatePlayerUI(data) {
@@ -115,6 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 4. 更新歌词
     updateOriginal(lyricOrig, data);
     updateTranslated(lyricTrans, data);
+    updateLanguage([document.documentElement], data);
   }
 
   const client = new SubtitleClient(LyricUrl, (event) => {
