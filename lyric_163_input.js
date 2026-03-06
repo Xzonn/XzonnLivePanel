@@ -24,21 +24,38 @@
     let lastLine = null;
 
     const callback = (mutationsList, observer) => {
-      const lyricNode = playerNode.querySelector(".listlyric");
-      if (!lyricNode) {
+      if (!websocket || websocket.readyState !== WebSocket.OPEN) {
         return;
       }
-      const currentLine = (lyricNode.querySelector("p.z-sel") || lyricNode.querySelector("p"))?.innerText.trim() || "";
-      const lines = currentLine
-        .split("\n")
-        .map((line) => line.trim())
-        .filter((line) => line.length > 0);
-      const original = lines[0] || "";
-      const translated = lines[1] || "";
+      const lyricsNode = playerNode.querySelector(".listlyric");
+      const { original, translated, language } = (() => {
+        if (!lyricsNode) {
+          return {};
+        }
+        const currentLine =
+          (lyricsNode.querySelector("p.z-sel") || lyricsNode.querySelector("p"))?.innerText.trim() || "";
+        const lines = currentLine
+          .split("\n")
+          .map((line) => line.trim())
+          .filter((line) => line.length > 0);
+        const original = lines[0] || "";
+        const translated = lines[1] || "";
+        const language = lyricsNode.innerText.search(/[\u3040-\u30ff]/) >= 0 ? "ja" : "zh-cn";
+
+        return { original, translated, language };
+      })();
 
       const isPlaying = playerNode.querySelector("a[data-action='pause']") !== null;
-      const title = playerNode.querySelector(".play .words .name")?.textContent.trim() || "";
-      const artist = playerNode.querySelector(".play .words .by")?.textContent.trim() || "";
+      const title =
+        playerNode
+          .querySelector(".play .words .name")
+          ?.textContent.replace(/\u00a0/g, " ")
+          .trim() || "";
+      const artist =
+        playerNode
+          .querySelector(".play .words .by")
+          ?.textContent.replace(/\u00a0/g, " ")
+          .trim() || "";
       const time = playerNode.querySelector(".play .time")?.textContent.trim() || "";
       const [current, total] = time.split("/").map((t) => t.trim());
       const cover =
@@ -47,7 +64,17 @@
           ?.src.replace(/(\?.*)?$/, "")
           .replace(/^http:\/\//, "https://") || "";
 
-      const information = JSON.stringify({ title, artist, original, translated, current, total, cover, isPlaying });
+      const information = JSON.stringify({
+        title,
+        artist,
+        original,
+        translated,
+        current,
+        total,
+        cover,
+        isPlaying,
+        language,
+      });
       if (information === lastLine) {
         return;
       }
@@ -63,6 +90,9 @@
       subtree: true,
       characterData: true,
     });
+    websocket.onopen = () => {
+      callback();
+    };
     websocket.onmessage = async (event) => {
       const data = JSON.parse(event.data || "{}");
       const { url = "" } = data;
